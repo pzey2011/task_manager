@@ -1,3 +1,16 @@
 from django.db import models
 
-# Create your models here.
+class Group(models.Model):
+	title = models.CharField(max_length=200)
+
+class Task(models.Model):
+	STATUS = (
+		('done', 'done'),
+        ('pending', 'pending'),
+	)
+	title = models.CharField(max_length=200)
+	status = models.CharField(max_length=1, choices=STATUS)
+	group = models.ForeignKey(Group, on_delete=models.CASCADE)
+	creation_date = models.DateTimeField('date created')
+
+
