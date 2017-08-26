@@ -1,5 +1,24 @@
 {% extends 'layout.html' %}
-
+<head>
+	<script>
+	$(document).ready(function(){
+    	$("#hidden").click(function(){
+        	$("p").show();
+    	});
+	});
+	</script>
+</head>
 {% block content %}
-{{groups}}
+{% for group in groups %}
+    <p>{{ group }}</p>
+{% endfor %}
+<div id=hidden>
+	<form action="/tasks/newGroup" method="post">
+		{% csrf_token %}
+		<label for="name">Name:</label>
+    	<input type="text" name="name" />
+	  	</br>
+		<input type="submit" value="Add" />
+	</form>
+</div>
 {% endblock %}
