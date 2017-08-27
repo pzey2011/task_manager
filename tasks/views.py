@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 
@@ -12,4 +12,7 @@ def newGroup(request):
 	Group.objects.create(title=request.POST["name"])
 	return HttpResponseRedirect('/tasks')
 
+def newTask(request, group_id):
+	Task.objects.create(title=request.POST["name"],group=get_object_or_404(Group,pk=group_id))
+	return HttpResponseRedirect('/tasks')
 

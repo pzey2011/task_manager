@@ -1,24 +1,66 @@
 {% extends 'layout.html' %}
 <head>
-	<script>
-	$(document).ready(function(){
-    	$("#hidden").click(function(){
-        	$("p").show();
-    	});
-	});
-	</script>
+<style>
+	ul#form.list-group li{
+    	display:inline;
+	}
+
+</style>
 </head>
 {% block content %}
-{% for group in groups %}
-    <p>{{ group }}</p>
-{% endfor %}
-<div id=hidden>
-	<form action="/tasks/newGroup" method="post">
-		{% csrf_token %}
-		<label for="name">Name:</label>
-    	<input type="text" name="name" />
-	  	</br>
-		<input type="submit" value="Add" />
-	</form>
+<div class="container">
+  <h2>Groups</h2>
+	<ul class="list-group">
+		{% for group in groups %}
+
+		    <li class="list-group-item">
+		    	<a data-toggle="collapse" data-target="#demo_{{ group }}" href="#collapse">{{ group }}</a>
+		    </li>
+		    <div id="demo_{{ group }}" class="collapse">
+			    <li class="list-group-item">
+			    	{% for task in group.task_set.all %}
+			    			
+					    		<ul class="list-group" id="form">
+					    				<h2>{{task.id}}</h2>
+										<li class="list-group-item">{{task}}</li>
+										<li class="list-group-item">{{task.status}}</li>
+										<li class="list-group-item">{{task.creation_date}}</li>
+										</br>
+									
+								</ul>
+
+					{% endfor %}
+			    </li>
+			    <li class="list-group-item" id="show">								
+					<form action="/tasks/{{ group.id }}/newTask" method="post">
+						{% csrf_token %}
+						<label for="name">Name:</label>
+	    				<input type="text" name="name" />
+
+		  				</br>
+						<button type="submit" id="add" class="btn btn-primary">Add</button>
+					</form>						
+				</li>
+			</div>
+
+		{% endfor %}
+		
+	</ul>
+		<h2>Add new group</h2>
+		<form action="/tasks/newGroup" method="post">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="name">Name:</label>
+	    		<input type="text" name="name" />
+	    		</div>
+			</div>
+		  		</br>
+
+			<button type="submit" class="btn btn-default">Add</button>
+		</form>
+	
 </div>
+
+
+
 {% endblock %}
