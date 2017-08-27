@@ -26,3 +26,10 @@ def updateTask(request, group_id, task_id):
 	task.save()
 	return HttpResponseRedirect('/tasks')
 
+def deleteTask(request, task_id):
+	task = get_object_or_404(Task,pk=task_id)
+	if task.status == "pending":
+		task.delete()
+	
+	return HttpResponseRedirect('/tasks')
+

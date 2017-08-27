@@ -24,7 +24,7 @@
 					    				<h2>{{task.id}}</h2>
 										<li class="list-group-item">{{task}}</li>
 										<li class="list-group-item">{{task.creation_date}}</li>
-										</br>
+										</br>											
 										<li class="list-group-item">
 											<form action="/tasks/{{ group.id }}/{{task.id}}/updateTask" method="post">
 												{% csrf_token %}
@@ -45,6 +45,10 @@
 	    											</label>
 
     											</div>
+    											<div>
+	    											<button type="submit" class="btn btn-primary">Update</button>
+	    											
+	  											</div>
     											{% else %}
     											<div class="custom-controls-stacked">
     												<label class="custom-control custom-radio">
@@ -62,19 +66,22 @@
 	    											</label>
     												
     											</div>
+    											<div>
+	    											<button type="submit" class="btn btn-primary">Update</button>
+	    				
+	  											</div>
     											{% endif %}
 
-	  											<div>
-	    											<button type="submit" class="btn btn-primary">Update</button>
 
-	  											</div>
 											</form>
 										</li>
+										<li class="list-group-item"><a href="/tasks/{{ task.id }}/deleteTask" class="btn btn-primary">Delete</a></li>
 								</ul>
 
 					{% endfor %}
 			    </li>
-			    <li class="list-group-item" id="show">								
+			    <li class="list-group-item" id="show">
+			    <h2>Add new task</h2>								
 					<form action="/tasks/{{ group.id }}/newTask" method="post">
 						{% csrf_token %}
 						<div class="form-group">
@@ -90,21 +97,21 @@
 			</div>
 
 		{% endfor %}
-		
 	</ul>
-		<h2>Add new group</h2>
-		<form action="/tasks/newGroup" method="post">
-			{% csrf_token %}
-			<div class="form-group">
-				<label for="name">Name:</label>
-	    		<input type="text" name="name" />
-	    		</div>
-			</div>
-		  		</br>
-		  	<div>
-				<button type="submit" class="btn btn-primary">Add</button>
-			</div>
-		</form>
+	</br>	
+	<h2>Add new group</h2>
+	<form action="/tasks/newGroup" method="post">
+		{% csrf_token %}
+		<div class="form-group">
+			<label for="name">Name:</label>
+    		<input type="text" name="name" />
+    		
+		</div>
+
+			<button type="submit" class="btn btn-primary">Add</button>
+		
+	</form>
+		
 	
 </div>
 
