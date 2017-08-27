@@ -16,3 +16,13 @@ def newTask(request, group_id):
 	Task.objects.create(title=request.POST["name"],group=get_object_or_404(Group,pk=group_id))
 	return HttpResponseRedirect('/tasks')
 
+def updateTask(request, group_id, task_id):
+	group=get_object_or_404(Group,pk=group_id)
+	task= get_object_or_404(Task,pk=task_id)
+	if request.POST["radio"]=="1" :
+		task.status="pending"
+	else:
+		task.status="done"
+	task.save()
+	return HttpResponseRedirect('/tasks')
+
